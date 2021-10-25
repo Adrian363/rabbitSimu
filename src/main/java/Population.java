@@ -14,6 +14,8 @@ public class Population {
     int     adultsSurvivalRate;
     int     kittensSurvivalRate;
     double  maleProb;
+    int test;
+
 
     ArrayList<MonthlyPopulation> populations;
 
