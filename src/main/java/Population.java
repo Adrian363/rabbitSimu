@@ -18,14 +18,17 @@ public class Population {
     public Population(int femaleNumber, int maleNumber, int minKittens, int maxKittens, double maleProb,
                       int minSexualMaturity, int maxSexualMaturity, int adultsSurvivalRate, int kittensSurvivalRate) {
 
-        this.femaleNumber = femaleNumber;
-        this.maleNumber   = maleNumber;
-        this.aliveRabbitNumber = maleNumber + femaleNumber;
-        this.minKittens = minKittens;
-        this.maxKittens = maxKittens;
-        this.maleProb = maleProb;
-        this.minSexualMaturity = minSexualMaturity;
-        this.maxSexualMaturity = maxSexualMaturity;
+        this.femaleNumber           = femaleNumber;
+        this.maleNumber             = maleNumber;
+        this.aliveRabbitNumber      = maleNumber + femaleNumber;
+        this.minKittens             = minKittens;
+        this.maxKittens             = maxKittens;
+        this.maleProb               = maleProb;
+        this.minSexualMaturity      = minSexualMaturity;
+        this.maxSexualMaturity      = maxSexualMaturity;
+        this.adultsSurvivalRate     = adultsSurvivalRate;
+        this.kittensSurvivalRate    = kittensSurvivalRate;
+
 
         this.populations =   new ArrayList<PopulationMensuelle>();
     }
