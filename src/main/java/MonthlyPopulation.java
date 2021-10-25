@@ -1,6 +1,7 @@
 package java;
 
 import org.junit.jupiter.api.Test;
+import org.apache.commons.math3.random.MersenneTwister;
 
 public class MonthlyPopulation {
 
@@ -10,6 +11,7 @@ public class MonthlyPopulation {
     int femaleNumber;
     int monthsMaturity;
     int littersNumber;
+
 
     public void evolution(Population population) {
 
