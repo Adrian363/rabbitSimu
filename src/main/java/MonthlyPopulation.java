@@ -2,7 +2,7 @@ package java;
 
 import org.junit.jupiter.api.Test;
 
-public class PopulationMensuelle {
+public class MonthlyPopulation {
 
     int age;
     int rabbitNumber;

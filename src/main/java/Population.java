@@ -15,7 +15,7 @@ public class Population {
     int     kittensSurvivalRate;
     double  maleProb;
 
-    ArrayList<PopulationMensuelle> populations;
+    ArrayList<MonthlyPopulation> populations;
 
     public Population(int femaleNumber, int maleNumber, int minKittens, int maxKittens, double maleProb,
                       int minSexualMaturity, int maxSexualMaturity, int adultsSurvivalRate, int kittensSurvivalRate) {
@@ -29,7 +29,7 @@ public class Population {
         this.minSexualMaturity = minSexualMaturity;
         this.maxSexualMaturity = maxSexualMaturity;
 
-        this.populations =   new ArrayList<PopulationMensuelle>();
+        this.populations = new ArrayList<MonthlyPopulation>();
     }
 
 
