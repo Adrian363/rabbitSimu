@@ -2,6 +2,6 @@ package java;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PopulationMensuelleTest {
+class MonthlyPopulationTest {
 
 }

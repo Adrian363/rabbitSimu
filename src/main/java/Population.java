@@ -1,3 +1,5 @@
+package java;
+
 import java.util.ArrayList;
 
 public class Population {
@@ -13,7 +15,7 @@ public class Population {
     int     kittensSurvivalRate;
     double  maleProb;
 
-    ArrayList<PopulationMensuelle> populations;
+    ArrayList<MonthlyPopulation> populations;
 
     public Population(int femaleNumber, int maleNumber, int minKittens, int maxKittens, double maleProb,
                       int minSexualMaturity, int maxSexualMaturity, int adultsSurvivalRate, int kittensSurvivalRate) {
@@ -30,7 +32,7 @@ public class Population {
         this.kittensSurvivalRate    = kittensSurvivalRate;
 
 
-        this.populations =   new ArrayList<PopulationMensuelle>();
+        this.populations = new ArrayList<MonthlyPopulation>();
     }
 
 
