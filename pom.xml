@@ -14,6 +14,13 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.cgore</groupId>
+            <artifactId>mersenne-twister</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
