@@ -1,7 +1,6 @@
 package java;
 
 import org.junit.jupiter.api.Test;
-import org.apache.commons.math3.random.MersenneTwister;
 
 public class MonthlyPopulation {
 

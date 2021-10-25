@@ -14,6 +14,7 @@ public class Population {
     int     adultsSurvivalRate;
     int     kittensSurvivalRate;
     double  maleProb;
+    MersenneTwister random;
 
 
     ArrayList<MonthlyPopulation> populations;
@@ -32,7 +33,7 @@ public class Population {
         this.adultsSurvivalRate     = adultsSurvivalRate;
         this.kittensSurvivalRate    = kittensSurvivalRate;
 
-
+        this.random = new MersenneTwister();
         this.populations = new ArrayList<MonthlyPopulation>();
     }
 
