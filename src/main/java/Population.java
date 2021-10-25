@@ -14,7 +14,6 @@ public class Population {
     int     adultsSurvivalRate;
     int     kittensSurvivalRate;
     double  maleProb;
-    int test;
 
 
     ArrayList<MonthlyPopulation> populations;
@@ -36,13 +35,6 @@ public class Population {
 
         this.populations = new ArrayList<MonthlyPopulation>();
     }
-
-
-
-
-
-
-
 
 
 }
