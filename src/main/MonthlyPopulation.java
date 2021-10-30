@@ -2,13 +2,13 @@ import org.junit.jupiter.api.Test;
 
 public class MonthlyPopulation {
 
-    int age;
-    int rabbitNumber;
-    int aliveRabbitNumber;
-    int femaleNumber;
-    int aliveFemaleNumber;
-    int monthsMaturity;
-    int littersNumber;
+    private int age;
+    private int rabbitNumber;
+    private int aliveRabbitNumber;
+    private int femaleNumber;
+    private int aliveFemaleNumber;
+    private int monthsMaturity;
+    private int littersNumber;
 
     public MonthlyPopulation() {
         this.age = 0;
@@ -137,7 +137,6 @@ public class MonthlyPopulation {
     }
 
     public void updateLittersNumber(Population population) {
-
 
         if ((this.age - this.monthsMaturity) % 12 == 0) {
 
