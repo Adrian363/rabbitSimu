@@ -127,6 +127,7 @@ public class MonthlyPopulation {
         }
 
         newKittensNumber = newMaleKittensNumber + newFemaleKittensNumber;
+
         this.littersNumber--;
 
         litter = new MonthlyPopulation(newKittensNumber,newFemaleKittensNumber,(int) population.rand(population.getMinSexualMaturity(), population.getMaxSexualMaturity() + 1));
@@ -137,8 +138,29 @@ public class MonthlyPopulation {
 
     public void updateLittersNumber(Population population) {
 
+
         if ((this.age - this.monthsMaturity) % 12 == 0) {
-            this.littersNumber = (int) population.rand(population.getMinSexualMaturity(), population.getMaxSexualMaturity() + 1);
+
+            // TODO Population values
+            int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
+
+            int[] cumulateProbas = new int[possibleLitters.length];
+            int cumulateProba = 0;
+
+            for (int i = 0 ; i < possibleLitters.length ; i++) {
+                cumulateProba += possibleLitters[i][1];
+                cumulateProbas[i] = cumulateProba;
+            }
+
+            double random = population.rand(0,100);
+            int j = 0;
+
+            while(random > cumulateProbas[j]) {
+                j++;
+            }
+
+            this.littersNumber = possibleLitters[j][0];
+
         }
 
     }
@@ -148,6 +170,16 @@ public class MonthlyPopulation {
         int survivalProba = this.age >= this.monthsMaturity ? population.getAdultsSurvivalRate() : population.getKittensSurvivalRate();
         int newAliveRabbitNumber = this.aliveRabbitNumber;
         int newAliveFemaleNumber = this.aliveFemaleNumber;
+        int monthsAge = age;
+
+        // TODO Population values
+        int yearsBeforeLeast = 10;
+        int leastProbaEachYear = 10;
+
+        while (monthsAge >= 12 * (yearsBeforeLeast + 1)) {
+            survivalProba -= leastProbaEachYear;
+            monthsAge -= 12;
+        }
 
         for (int i = 0 ; i < this.aliveRabbitNumber ; i++) {
 
