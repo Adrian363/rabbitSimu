@@ -24,6 +24,16 @@ public class MonthlyPopulation {
         this.littersNumber = littersNumber;
     }
 
+    public MonthlyPopulation(int rabbitNumber, int femaleNumber, int monthsMaturity) {
+        this.age = 0;
+        this.rabbitNumber = rabbitNumber;
+        this.aliveRabbitNumber = rabbitNumber;
+        this.femaleNumber = femaleNumber;
+        this.aliveFemaleNumber = femaleNumber;
+        this.monthsMaturity = monthsMaturity;
+        this.littersNumber = 0;
+    }
+
     public int getAge() {
         return age;
     }
@@ -82,52 +92,94 @@ public class MonthlyPopulation {
 
     public void evolution(Population population) {
 
-        age++;
+        this.age++;
 
-        int survivalProba = age >= monthsMaturity ? population.getAdultsSurvivalRate() : population.getKittensSurvivalRate();
-        int newAliveRabbitNumber = aliveRabbitNumber;
-        int newAliveFemaleNumber = aliveFemaleNumber;
+        updateLittersNumber(population);
 
-        for (int i = 0 ; i < aliveRabbitNumber ; i++) {
+        updateAliveRabbits(population);
 
-            if (population.rand(0, 100) > survivalProba) {
-
-                newAliveRabbitNumber--;
-
-                if (aliveFemaleNumber > 0) {
-                    newAliveFemaleNumber--;
-                }
-
-            }
-
-            aliveFemaleNumber--;
-
+        if (this.littersNumber > 0 && this.age >= this.monthsMaturity) {
+            population.getPopulations().add(generateLitter(population));
         }
 
-        aliveRabbitNumber = newAliveRabbitNumber;
-        aliveFemaleNumber = newAliveFemaleNumber;
+    }
+
+    public MonthlyPopulation generateLitter(Population population) {
+
+        MonthlyPopulation litter;
 
         int newKittensNumber;
         int newFemaleKittensNumber = 0;
         int newMaleKittensNumber = 0;
 
-        if (littersNumber > 0) {
+        for (int i = 0 ; i < this.aliveFemaleNumber ; i++) {
 
-            for (int i = 0 ; i < aliveFemaleNumber ; i++) {
+            int kittensNumber = (int) population.rand(population.getMinKittens(), population.getMaxKittens() + 1);
 
+            for (int j = 0 ; j < kittensNumber ; j++) {
                 if (population.rand(0,100) > population.getMaleProb()) {
                     newFemaleKittensNumber++;
                 } else {
                     newMaleKittensNumber++;
                 }
-
             }
 
-            newKittensNumber = newMaleKittensNumber + newFemaleKittensNumber;
-            rabbitNumber = newKittensNumber;
+        }
 
+        newKittensNumber = newMaleKittensNumber + newFemaleKittensNumber;
+        this.littersNumber--;
+
+        litter = new MonthlyPopulation(newKittensNumber,newFemaleKittensNumber,(int) population.rand(population.getMinSexualMaturity(), population.getMaxSexualMaturity() + 1));
+
+        return litter;
+
+    }
+
+    public void updateLittersNumber(Population population) {
+
+        if ((this.age - this.monthsMaturity) % 12 == 0) {
+            this.littersNumber = (int) population.rand(population.getMinSexualMaturity(), population.getMaxSexualMaturity() + 1);
         }
 
     }
 
+    public void updateAliveRabbits(Population population) {
+
+        int survivalProba = this.age >= this.monthsMaturity ? population.getAdultsSurvivalRate() : population.getKittensSurvivalRate();
+        int newAliveRabbitNumber = this.aliveRabbitNumber;
+        int newAliveFemaleNumber = this.aliveFemaleNumber;
+
+        for (int i = 0 ; i < this.aliveRabbitNumber ; i++) {
+
+            if (population.rand(0, 100) > survivalProba) {
+
+                newAliveRabbitNumber--;
+
+                if (this.aliveFemaleNumber > 0) {
+                    newAliveFemaleNumber--;
+                }
+
+            }
+
+            this.aliveFemaleNumber--;
+
+        }
+
+        this.aliveRabbitNumber = newAliveRabbitNumber;
+        this.aliveFemaleNumber = newAliveFemaleNumber;
+
+    }
+
+    @Override
+    public String toString() {
+        return "MonthlyPopulation{" +
+                "age=" + age +
+                ", rabbitNumber=" + rabbitNumber +
+                ", aliveRabbitNumber=" + aliveRabbitNumber +
+                ", femaleNumber=" + femaleNumber +
+                ", aliveFemaleNumber=" + aliveFemaleNumber +
+                ", monthsMaturity=" + monthsMaturity +
+                ", littersNumber=" + littersNumber +
+                '}';
+    }
 }
