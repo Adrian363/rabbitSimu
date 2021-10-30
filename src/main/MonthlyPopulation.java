@@ -143,23 +143,9 @@ public class MonthlyPopulation {
 
             // TODO Population values
             int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
+            int[] cumulateProbas = getCumulateLittersProbas(possibleLitters);
 
-            int[] cumulateProbas = new int[possibleLitters.length];
-            int cumulateProba = 0;
-
-            for (int i = 0 ; i < possibleLitters.length ; i++) {
-                cumulateProba += possibleLitters[i][1];
-                cumulateProbas[i] = cumulateProba;
-            }
-
-            double random = population.rand(0,100);
-            int j = 0;
-
-            while(random > cumulateProbas[j]) {
-                j++;
-            }
-
-            this.littersNumber = possibleLitters[j][0];
+            this.littersNumber = possibleLitters[getLitter(cumulateProbas, population)][0];
 
         }
 
@@ -199,6 +185,33 @@ public class MonthlyPopulation {
 
         this.aliveRabbitNumber = newAliveRabbitNumber;
         this.aliveFemaleNumber = newAliveFemaleNumber;
+
+    }
+
+    public int[] getCumulateLittersProbas(int[][] possibleLitters) {
+
+        int[] cumulateProbas = new int[possibleLitters.length];
+        int cumulateProba = 0;
+
+        for (int i = 0 ; i < possibleLitters.length ; i++) {
+            cumulateProba += possibleLitters[i][1];
+            cumulateProbas[i] = cumulateProba;
+        }
+
+        return cumulateProbas;
+
+    }
+
+    public int getLitter(int[] cumulateProbas, Population population) {
+
+        double random = population.rand(0,100);
+        int j = 0;
+
+        while(random > cumulateProbas[j]) {
+            j++;
+        }
+
+        return j;
 
     }
 
