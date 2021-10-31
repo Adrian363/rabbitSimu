@@ -11,6 +11,9 @@ public class Population {
     private int     maxSexualMaturity;
     private int     adultsSurvivalRate;
     private int     kittensSurvivalRate;
+    private int     yearsBeforeLeast;
+    private int     leastProbaEachYear;
+
     private double  maleProb;
     private MersenneTwister random;
 
@@ -23,7 +26,8 @@ public class Population {
     }
 
     public Population(int femaleNumber, int maleNumber, int minKittens, int maxKittens, double maleProb,
-                      int minSexualMaturity, int maxSexualMaturity, int adultsSurvivalRate, int kittensSurvivalRate) {
+                      int minSexualMaturity, int maxSexualMaturity, int adultsSurvivalRate, int kittensSurvivalRate,
+                      int yearsBeforeLeast, int leastProbaEachYear) {
 
         this.femaleNumber           = femaleNumber;
         this.maleNumber             = maleNumber;
@@ -35,6 +39,8 @@ public class Population {
         this.maxSexualMaturity      = maxSexualMaturity;
         this.adultsSurvivalRate     = adultsSurvivalRate;
         this.kittensSurvivalRate    = kittensSurvivalRate;
+        this.yearsBeforeLeast       = yearsBeforeLeast;
+        this.leastProbaEachYear     = leastProbaEachYear;
 
         this.random = new MersenneTwister();
         this.populations = new ArrayList<MonthlyPopulation>();
@@ -131,6 +137,14 @@ public class Population {
         this.maleProb = maleProb;
     }
 
+    public int getYearsBeforeLeast() { return this.yearsBeforeLeast; }
+
+    public void setYearsBeforeLeast(int yearsBeforeLeast) { this.yearsBeforeLeast = yearsBeforeLeast; }
+
+    public int  getLeastProbaEachYear() { return this.leastProbaEachYear; }
+
+    public void setLeastProbaEachYear(int leastProbaEachYear) { this.leastProbaEachYear = leastProbaEachYear; }
+
     public MersenneTwister getRandom() {
         return random;
     }
@@ -145,6 +159,14 @@ public class Population {
 
     public void setPopulations(ArrayList<MonthlyPopulation> populations) {
         this.populations = populations;
+    }
+
+
+    public void updateAliveRabbitsPop(int deathFemale, int deathRabbits){
+
+        this.femaleNumber       -= deathFemale;
+        this.maleNumber         -= deathRabbits - deathFemale;
+        this.aliveRabbitNumber  -= deathRabbits;
     }
 
 }

@@ -26,7 +26,7 @@ class MonthlyPopulationTest {
     @Test
     void updateAliveRabbits() {
 
-        Population population = new Population(1,1,3,6,50,4,8,60,35);
+        Population population = new Population(1,1,3,6,50,4,8,60,35, 10, 10);
         MonthlyPopulation monthlyPopulation = new MonthlyPopulation(1000,500,5);
 
         monthlyPopulation.updateAliveRabbits(population);
