@@ -43,10 +43,11 @@ class MonthlyPopulationTest {
     void getCumulateLittersProbas() {
 
         MonthlyPopulation monthlyPopulation = new MonthlyPopulation();
+        Population population = new Population();
         int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
         int[] cumulateProbas = { 5, 35, 65, 95, 100 };
 
-        assertTrue(Arrays.equals(cumulateProbas, monthlyPopulation.getCumulateLittersProbas(possibleLitters)));
+        assertTrue(Arrays.equals(cumulateProbas, population.getCumulateLittersProbas(population.getPossibleLittersTab())));
 
     }
 

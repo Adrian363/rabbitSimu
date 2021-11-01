@@ -141,10 +141,11 @@ public class MonthlyPopulation {
         if ((this.age - this.monthsMaturity) % 12 == 0) {
 
             // TODO Population values
-            int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
-            int[] cumulateProbas = getCumulateLittersProbas(possibleLitters);
+            //int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
+            //int[] cumulateProbas = population.getCumulateLittersProbas(population.possibleLitters);
 
-            this.littersNumber = possibleLitters[getLitter(cumulateProbas, population)][0];
+            this.littersNumber =
+                    population.getPossibleLitters(getLitter(population.getCumulateProbas(), population),0);
 
         }
 
@@ -192,19 +193,6 @@ public class MonthlyPopulation {
 
     }
 
-    public int[] getCumulateLittersProbas(int[][] possibleLitters) {
-
-        int[] cumulateProbas = new int[possibleLitters.length];
-        int cumulateProba = 0;
-
-        for (int i = 0 ; i < possibleLitters.length ; i++) {
-            cumulateProba += possibleLitters[i][1];
-            cumulateProbas[i] = cumulateProba;
-        }
-
-        return cumulateProbas;
-
-    }
 
     public int getLitter(int[] cumulateProbas, Population population) {
 

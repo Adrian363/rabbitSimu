@@ -2,17 +2,20 @@ import java.util.ArrayList;
 
 public class Population {
 
-    private int     aliveRabbitNumber;
-    private int     femaleNumber;
-    private int     maleNumber;
-    private int     minKittens;
-    private int     maxKittens;
-    private int     minSexualMaturity;
-    private int     maxSexualMaturity;
-    private int     adultsSurvivalRate;
-    private int     kittensSurvivalRate;
-    private int     yearsBeforeLeast;
-    private int     leastProbaEachYear;
+    private int      aliveRabbitNumber;
+    private int      femaleNumber;
+    private int      maleNumber;
+    private int      minKittens;
+    private int      maxKittens;
+    private int      minSexualMaturity;
+    private int      maxSexualMaturity;
+    private int      adultsSurvivalRate;
+    private int      kittensSurvivalRate;
+    private int      yearsBeforeLeast;
+    private int      leastProbaEachYear;
+    private int  []  cumulateProbas;
+    private int [][] possibleLitters  = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
+
 
     private double  maleProb;
     private MersenneTwister random;
@@ -20,6 +23,7 @@ public class Population {
     private ArrayList<MonthlyPopulation> populations;
 
     public Population() {
+        this.cumulateProbas =  getCumulateLittersProbas(possibleLitters);
         this.random = new MersenneTwister();
         this.populations = new ArrayList<MonthlyPopulation>();
         random.setSeed(123456789);
@@ -27,7 +31,7 @@ public class Population {
 
     public Population(int femaleNumber, int maleNumber, int minKittens, int maxKittens, double maleProb,
                       int minSexualMaturity, int maxSexualMaturity, int adultsSurvivalRate, int kittensSurvivalRate,
-                      int yearsBeforeLeast, int leastProbaEachYear) {
+                      int yearsBeforeLeast, int leastProbaEachYear ) {
 
         this.femaleNumber           = femaleNumber;
         this.maleNumber             = maleNumber;
@@ -41,6 +45,7 @@ public class Population {
         this.kittensSurvivalRate    = kittensSurvivalRate;
         this.yearsBeforeLeast       = yearsBeforeLeast;
         this.leastProbaEachYear     = leastProbaEachYear;
+        this.cumulateProbas         = getCumulateLittersProbas(possibleLitters);
 
         this.random = new MersenneTwister();
         this.populations = new ArrayList<MonthlyPopulation>();
@@ -161,12 +166,31 @@ public class Population {
         this.populations = populations;
     }
 
+    public int[] getCumulateProbas(){ return this.cumulateProbas; }
+
+    public int getPossibleLitters( int i , int j) { return this.possibleLitters[i][j] ;}
+
+    public int [][] getPossibleLittersTab(){ return this.possibleLitters ;}
 
     public void updateAliveRabbitsPop(int deathFemale, int deathRabbits){
 
         this.femaleNumber       -= deathFemale;
         this.maleNumber         -= deathRabbits - deathFemale;
         this.aliveRabbitNumber  -= deathRabbits;
+    }
+
+    public int[] getCumulateLittersProbas(int[][] possibleLitters) {
+
+        int[] cumulateProbas = new int[possibleLitters.length];
+        int cumulateProba = 0;
+
+        for (int i = 0 ; i < possibleLitters.length ; i++) {
+                                cumulateProba += possibleLitters[i][1];
+            cumulateProbas[i] = cumulateProba;
+        }
+
+        return cumulateProbas;
+
     }
 
 }
