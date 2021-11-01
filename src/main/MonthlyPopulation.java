@@ -130,6 +130,8 @@ public class MonthlyPopulation {
 
         this.littersNumber--;
 
+        population.addAliveRabbits(newFemaleKittensNumber, newMaleKittensNumber, newKittensNumber);
+
         litter = new MonthlyPopulation(newKittensNumber,newFemaleKittensNumber,(int) population.rand(population.getMinSexualMaturity(), population.getMaxSexualMaturity() + 1));
 
         return litter;

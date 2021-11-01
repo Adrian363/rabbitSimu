@@ -174,9 +174,32 @@ public class Population {
 
     public void updateAliveRabbitsPop(int deathFemale, int deathRabbits){
 
-        this.femaleNumber       -= deathFemale;
-        this.maleNumber         -= deathRabbits - deathFemale;
-        this.aliveRabbitNumber  -= deathRabbits;
+        try{
+            if( (this.femaleNumber - deathFemale < 0) || ( this.maleNumber - (deathRabbits - deathFemale) < 0  ) || (this.aliveRabbitNumber - deathRabbits < 0) ){
+
+                throw new IllegalArgumentException();
+
+            }
+            else{
+
+                this.femaleNumber       -= deathFemale;
+                this.maleNumber         -= (deathRabbits - deathFemale);
+                this.aliveRabbitNumber  -= deathRabbits;
+            }
+        }
+        catch (IllegalArgumentException e){
+
+            System.out.println("The number of death rabbit is too high.");
+        }
+
+
+    }
+
+    public void addAliveRabbits(int newFemaleNumber, int newMaleNumber, int newRabbitsNumber ){
+
+        this.maleNumber        += newMaleNumber;
+        this.femaleNumber      += newFemaleNumber;
+        this.aliveRabbitNumber += newRabbitsNumber;
     }
 
     public int[] getCumulateLittersProbas(int[][] possibleLitters) {
