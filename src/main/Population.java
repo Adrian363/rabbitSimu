@@ -193,4 +193,13 @@ public class Population {
 
     }
 
+    @Override
+    public String toString() {
+        return "Population{" +
+               "aliveRabbitNumber=" + this.aliveRabbitNumber +
+               ", femaleNumber" + this.femaleNumber +
+               ", maleNumber=" + this.maleNumber +
+               ", femaleNumber=" + femaleNumber +
+               '}';
+    }
 }
