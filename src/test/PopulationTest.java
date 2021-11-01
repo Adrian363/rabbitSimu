@@ -15,4 +15,36 @@ class PopulationTest {
 
     }
 
+    @Test
+    public void addRabbits() {
+
+        Population population = new Population();
+
+        population.addAliveRabbits(5, 8, 13);
+
+        assertEquals(population.getFemaleNumber(), 5);
+        assertEquals(population.getMaleNumber(), 8);
+        assertEquals(population.getAliveRabbitNumber(), 13);
+
+    }
+
+    @Test
+    public void removeRabbits() {
+
+        Population population = new Population();
+
+        population.addAliveRabbits(5, 8, 13);
+        population.updateAliveRabbitsPop(4, 6);
+
+        assertEquals(population.getFemaleNumber(), 1);
+        assertEquals(population.getMaleNumber(), 6);
+        assertEquals(population.getAliveRabbitNumber(), 7);
+
+        // Testing when the number of death rabbits is superior than the number of rabbits alive
+        population.updateAliveRabbitsPop(2, 2);
+
+        assertEquals(population.getFemaleNumber(), 1);
+        assertEquals(population.getAliveRabbitNumber(), 7);
+    }
+
 }

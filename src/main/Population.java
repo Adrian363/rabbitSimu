@@ -200,6 +200,8 @@ public class Population {
         this.maleNumber        += newMaleNumber;
         this.femaleNumber      += newFemaleNumber;
         this.aliveRabbitNumber += newRabbitsNumber;
+
+        System.out.println( this.toString() );
     }
 
     public int[] getCumulateLittersProbas(int[][] possibleLitters) {
@@ -218,11 +220,10 @@ public class Population {
 
     @Override
     public String toString() {
-        return "Population{" +
+        return "Population{ " +
                "aliveRabbitNumber=" + this.aliveRabbitNumber +
                ", femaleNumber" + this.femaleNumber +
                ", maleNumber=" + this.maleNumber +
-               ", femaleNumber=" + femaleNumber +
-               '}';
+               " }";
     }
 }
