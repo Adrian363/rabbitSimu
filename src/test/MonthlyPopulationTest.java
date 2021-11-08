@@ -26,7 +26,8 @@ class MonthlyPopulationTest {
     @Test
     void updateAliveRabbits() {
 
-        Population population = new Population(1,1,3,6,50,4,8,60,35, 10, 10);
+        int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
+        Population population = new Population(1,1,3,6,50,4,8,60,35, 10, 10, possibleLitters);
         MonthlyPopulation monthlyPopulation = new MonthlyPopulation(1000,500,5);
 
         monthlyPopulation.updateAliveRabbits(population);
@@ -41,11 +42,9 @@ class MonthlyPopulationTest {
 
     @Test
     void getCumulateLittersProbas() {
-
+        int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
         MonthlyPopulation monthlyPopulation = new MonthlyPopulation();
-        Population population = new Population();
-        //int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
-        //int[] cumulateProbas = { 5, 35, 65, 95, 100 };
+        Population population = new Population(1,1,3,6,50,4,8,60,35, 10, 10, possibleLitters);
 
         assertTrue(Arrays.equals(population.getCumulateProbas(),
                                  population.getCumulateLittersProbas(population.getPossibleLittersTab())));
@@ -54,7 +53,9 @@ class MonthlyPopulationTest {
     @Test
     void getLitter() {
 
-        Population population = new Population();
+
+        int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
+        Population population = new Population(1,1,3,6,50,4,8,60,35, 10, 10, possibleLitters);
         MonthlyPopulation monthlyPopulation = new MonthlyPopulation();
         int[] cumulateProbas = { 10, 20, 50, 70, 100 };
 

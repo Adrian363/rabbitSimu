@@ -1,9 +1,25 @@
+import java.sql.SQLOutput;
+
 public class PopulationManager {
 
     public static void main(String[] args) {
+        int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
+        Population rabbitPopulation = new Population(10,10,3,6,50,4,8,60,35,10,10,possibleLitters);
+        //MonthlyPopulation monthly = new MonthlyPopulation(10000,5000,5);
 
-        Population rabbitPopulation = new Population(1,1,3,6,50,4,8,60,35,10,10);
-        MonthlyPopulation monthly = new MonthlyPopulation(10000,5000,5);
+        for(int i=0; i<6; i++){
+
+            rabbitPopulation.evolution();
+
+            for (MonthlyPopulation mp : rabbitPopulation.getPopulations()) {
+                System.out.println(mp.toString());
+            }
+            System.out.println("----------------------------------------");
+        }
+
+
+
+       // System.out.println(rabbitPopulation.getPopulations().toString());
 
     }
 

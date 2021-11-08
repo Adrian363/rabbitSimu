@@ -14,7 +14,7 @@ public class Population {
     private int      yearsBeforeLeast;
     private int      leastProbaEachYear;
     private int  []  cumulateProbas;
-    private int [][] possibleLitters  = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
+    private int [][] possibleLitters;
 
 
     private double  maleProb;
@@ -23,7 +23,7 @@ public class Population {
     private ArrayList<MonthlyPopulation> populations;
 
     public Population() {
-        this.cumulateProbas =  getCumulateLittersProbas(possibleLitters);
+        //this.cumulateProbas =  getCumulateLittersProbas(possibleLitters);
         this.random = new MersenneTwister();
         this.populations = new ArrayList<MonthlyPopulation>();
         random.setSeed(123456789);
@@ -31,7 +31,7 @@ public class Population {
 
     public Population(int femaleNumber, int maleNumber, int minKittens, int maxKittens, double maleProb,
                       int minSexualMaturity, int maxSexualMaturity, int adultsSurvivalRate, int kittensSurvivalRate,
-                      int yearsBeforeLeast, int leastProbaEachYear ) {
+                      int yearsBeforeLeast, int leastProbaEachYear, int[][] possibleLitters ) {
 
         this.femaleNumber           = femaleNumber;
         this.maleNumber             = maleNumber;
@@ -45,11 +45,13 @@ public class Population {
         this.kittensSurvivalRate    = kittensSurvivalRate;
         this.yearsBeforeLeast       = yearsBeforeLeast;
         this.leastProbaEachYear     = leastProbaEachYear;
+        this.possibleLitters        = possibleLitters;
         this.cumulateProbas         = getCumulateLittersProbas(possibleLitters);
 
         this.random = new MersenneTwister();
         this.populations = new ArrayList<MonthlyPopulation>();
         random.setSeed(123456789);
+        initPopulation();
     }
 
     /**
@@ -185,13 +187,13 @@ public class Population {
                 this.femaleNumber       -= deathFemale;
                 this.maleNumber         -= (deathRabbits - deathFemale);
                 this.aliveRabbitNumber  -= deathRabbits;
+
             }
         }
         catch (IllegalArgumentException e){
 
-            System.out.println("The number of death rabbit is too high.");
+            System.err.println("The number of death rabbit is too high.");
         }
-
 
     }
 
@@ -201,7 +203,7 @@ public class Population {
         this.femaleNumber      += newFemaleNumber;
         this.aliveRabbitNumber += newRabbitsNumber;
 
-        System.out.println( this.toString() );
+        // System.out.println( this.toString() );
     }
 
     public int[] getCumulateLittersProbas(int[][] possibleLitters) {
@@ -215,6 +217,23 @@ public class Population {
         }
 
         return cumulateProbas;
+
+    }
+
+    public void initPopulation() {
+
+        MonthlyPopulation monthlyPopulation = new MonthlyPopulation(this.aliveRabbitNumber, this.femaleNumber, 1);
+
+        this.populations.add(monthlyPopulation);
+    }
+
+    public void evolution() {
+
+        for(int i=0; i<populations.size(); i++) {
+            MonthlyPopulation mp = populations.get(i);
+            mp.evolution(this);
+
+        }
 
     }
 

@@ -160,12 +160,6 @@ public class MonthlyPopulation {
         int newAliveFemaleNumber = this.aliveFemaleNumber;
         int monthsAge = age;
 
-        /*
-        // TODO Population values
-        int yearsBeforeLeast = 10;
-        int leastProbaEachYear = 10;
-        */
-
         while (monthsAge >= 12 * (population.getYearsBeforeLeast() + 1)) {
             survivalProba -= population.getLeastProbaEachYear();
             monthsAge -= 12;
@@ -192,6 +186,12 @@ public class MonthlyPopulation {
 
         this.aliveRabbitNumber = newAliveRabbitNumber;
         this.aliveFemaleNumber = newAliveFemaleNumber;
+
+        if (this.aliveRabbitNumber <= 0) {
+
+            population.getPopulations().remove(this);
+
+        }
 
     }
 
