@@ -112,7 +112,7 @@ public class MonthlyPopulation {
         long newFemaleKittensNumber = 0;
         long newMaleKittensNumber = 0;
 
-        int kittensNumber = (int) population.rand(population.getMinKittens(), population.getMaxKittens() + 1);
+        int kittensNumber = getMiddle(population.getMinKittens(), population.getMaxKittens());
 
         newKittensNumber = this.aliveFemaleNumber * kittensNumber;
         newMaleKittensNumber = (long) (population.getMaleProb() / 100 * newKittensNumber);
@@ -207,6 +207,10 @@ public class MonthlyPopulation {
 
         return j;
 
+    }
+
+    public int getMiddle(int a, int b) {
+        return (a + b) / 2;
     }
 
     @Override
