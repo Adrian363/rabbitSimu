@@ -3,11 +3,19 @@ import java.sql.SQLOutput;
 public class PopulationManager {
 
     public static void main(String[] args) {
-        int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
-        Population rabbitPopulation = new Population(10,10,3,6,50,4,8,60,35,10,10,possibleLitters);
-        //MonthlyPopulation monthly = new MonthlyPopulation(10000,5000,5);
 
-        for(int i=0; i<13; i++){
+        int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
+        int yearsSimulation = 12;
+
+        Population rabbitPopulation = new Population(10,10,3,6,50,4,8,60,35,10,10,possibleLitters);
+
+        for (int i = 0 ; i < yearsSimulation * 12 ; i++) {
+            rabbitPopulation.evolution();
+        }
+
+        /*
+
+        for(int i = 0; i < 13 ; i++) {
 
             rabbitPopulation.evolution();
             System.out.println(rabbitPopulation.toString());
@@ -17,9 +25,9 @@ public class PopulationManager {
             System.out.println("----------------------------------------");
         }
 
+        */
 
-
-       // System.out.println(rabbitPopulation.getPopulations().toString());
+        System.out.println(rabbitPopulation.toString());
 
     }
 

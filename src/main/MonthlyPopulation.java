@@ -3,10 +3,10 @@ import org.junit.jupiter.api.Test;
 public class MonthlyPopulation {
 
     private int age;
-    private int rabbitNumber;
-    private int aliveRabbitNumber;
-    private int femaleNumber;
-    private int aliveFemaleNumber;
+    private long rabbitNumber;
+    private long aliveRabbitNumber;
+    private long femaleNumber;
+    private long aliveFemaleNumber;
     private int monthsMaturity;
     private int littersNumber;
 
@@ -14,7 +14,7 @@ public class MonthlyPopulation {
         this.age = 0;
     }
 
-    public MonthlyPopulation(int age, int rabbitNumber, int aliveRabbitNumber, int femaleNumber, int aliveFemaleNumber, int monthsMaturity, int littersNumber) {
+    public MonthlyPopulation(int age, long rabbitNumber, long aliveRabbitNumber, long femaleNumber, long aliveFemaleNumber, int monthsMaturity, int littersNumber) {
         this.age = age;
         this.rabbitNumber = rabbitNumber;
         this.aliveRabbitNumber = aliveRabbitNumber;
@@ -24,7 +24,7 @@ public class MonthlyPopulation {
         this.littersNumber = littersNumber;
     }
 
-    public MonthlyPopulation(int rabbitNumber, int femaleNumber, int monthsMaturity) {
+    public MonthlyPopulation(long rabbitNumber, long femaleNumber, int monthsMaturity) {
         this.age = 0;
         this.rabbitNumber = rabbitNumber;
         this.aliveRabbitNumber = rabbitNumber;
@@ -42,35 +42,35 @@ public class MonthlyPopulation {
         this.age = age;
     }
 
-    public int getRabbitNumber() {
+    public long getRabbitNumber() {
         return rabbitNumber;
     }
 
-    public void setRabbitNumber(int rabbitNumber) {
+    public void setRabbitNumber(long rabbitNumber) {
         this.rabbitNumber = rabbitNumber;
     }
 
-    public int getAliveRabbitNumber() {
+    public long getAliveRabbitNumber() {
         return aliveRabbitNumber;
     }
 
-    public void setAliveRabbitNumber(int aliveRabbitNumber) {
+    public void setAliveRabbitNumber(long aliveRabbitNumber) {
         this.aliveRabbitNumber = aliveRabbitNumber;
     }
 
-    public int getFemaleNumber() {
+    public long getFemaleNumber() {
         return femaleNumber;
     }
 
-    public void setFemaleNumber(int femaleNumber) {
+    public void setFemaleNumber(long femaleNumber) {
         this.femaleNumber = femaleNumber;
     }
 
-    public int getAliveFemaleNumber() {
+    public long getAliveFemaleNumber() {
         return aliveFemaleNumber;
     }
 
-    public void setAliveFemaleNumber(int aliveFemaleNumber) {
+    public void setAliveFemaleNumber(long aliveFemaleNumber) {
         this.aliveFemaleNumber = aliveFemaleNumber;
     }
 
@@ -108,11 +108,17 @@ public class MonthlyPopulation {
 
     public void generateLitter(Population population, MonthlyPopulation nextMonthlyPopulation) {
 
-        int newKittensNumber;
-        int newFemaleKittensNumber = 0;
-        int newMaleKittensNumber = 0;
+        long newKittensNumber;
+        long newFemaleKittensNumber = 0;
+        long newMaleKittensNumber = 0;
 
-        for (int i = 0 ; i < this.aliveFemaleNumber ; i++) {
+        int kittensNumber = (int) population.rand(population.getMinKittens(), population.getMaxKittens() + 1);
+
+        newKittensNumber = this.aliveFemaleNumber * kittensNumber;
+        newMaleKittensNumber = (long) (population.getMaleProb() / 100 * newKittensNumber);
+        newFemaleKittensNumber = newKittensNumber - newMaleKittensNumber;
+
+        /*for (int i = 0 ; i < this.aliveFemaleNumber ; i++) {
 
             int kittensNumber = (int) population.rand(population.getMinKittens(), population.getMaxKittens() + 1);
 
@@ -126,7 +132,7 @@ public class MonthlyPopulation {
 
         }
 
-        newKittensNumber = newMaleKittensNumber + newFemaleKittensNumber;
+        newKittensNumber = newMaleKittensNumber + newFemaleKittensNumber;*/
 
         this.littersNumber--;
 
@@ -150,10 +156,8 @@ public class MonthlyPopulation {
     public void updateAliveRabbits(Population population) {
 
         int survivalProba = this.age >= this.monthsMaturity ? population.getAdultsSurvivalRate() : population.getKittensSurvivalRate();
-        int oldAliveRabbitsNumber = this.aliveRabbitNumber;
-        int oldAliveFemaleNumber = this.aliveFemaleNumber;
-        int newAliveRabbitNumber = this.aliveRabbitNumber;
-        int newAliveFemaleNumber = this.aliveFemaleNumber;
+        long newAliveRabbitNumber = this.aliveRabbitNumber;
+        long newAliveFemaleNumber = this.aliveFemaleNumber;
         int monthsAge = age;
 
         while (monthsAge >= 12 * (population.getYearsBeforeLeast() + 1)) {
@@ -161,7 +165,10 @@ public class MonthlyPopulation {
             monthsAge -= 12;
         }
 
-        for (int i = 0 ; i < this.aliveRabbitNumber ; i++) {
+        newAliveFemaleNumber = (long) (this.aliveFemaleNumber * survivalProba / 100);
+        newAliveRabbitNumber = (long) (this.aliveRabbitNumber * survivalProba / 100);
+
+        /*for (int i = 0 ; i < this.aliveRabbitNumber ; i++) {
 
             if (population.rand(0, 100) > survivalProba) {
 
@@ -175,7 +182,9 @@ public class MonthlyPopulation {
 
             this.aliveFemaleNumber--;
 
-        }
+        }*/
+
+        population.updateAliveRabbitsPop((this.aliveFemaleNumber - newAliveFemaleNumber), (this.aliveRabbitNumber - newAliveRabbitNumber));
 
         this.aliveRabbitNumber = newAliveRabbitNumber;
         this.aliveFemaleNumber = newAliveFemaleNumber;
@@ -183,8 +192,6 @@ public class MonthlyPopulation {
         if (this.aliveRabbitNumber <= 0) {
             population.getPopulations().remove(this);
         }
-
-        population.updateAliveRabbitsPop((oldAliveFemaleNumber - newAliveFemaleNumber), (oldAliveRabbitsNumber - newAliveRabbitNumber));
 
     }
 

@@ -3,9 +3,9 @@ import java.util.ArrayList;
 public class Population {
 
     private int      age;
-    private int      aliveRabbitNumber;
-    private int      femaleNumber;
-    private int      maleNumber;
+    private long      aliveRabbitNumber;
+    private long      femaleNumber;
+    private long      maleNumber;
     private int      minKittens;
     private int      maxKittens;
     private int      minSexualMaturity;
@@ -31,7 +31,7 @@ public class Population {
         random.setSeed(123456789);
     }
 
-    public Population(int femaleNumber, int maleNumber, int minKittens, int maxKittens, double maleProb,
+    public Population(long femaleNumber, long maleNumber, int minKittens, int maxKittens, double maleProb,
                       int minSexualMaturity, int maxSexualMaturity, int adultsSurvivalRate, int kittensSurvivalRate,
                       int yearsBeforeLeast, int leastProbaEachYear, int[][] possibleLitters ) {
 
@@ -75,27 +75,27 @@ public class Population {
         this.age = age;
     }
 
-    public int getAliveRabbitNumber() {
+    public long getAliveRabbitNumber() {
         return aliveRabbitNumber;
     }
 
-    public void setAliveRabbitNumber(int aliveRabbitNumber) {
+    public void setAliveRabbitNumber(long aliveRabbitNumber) {
         this.aliveRabbitNumber = aliveRabbitNumber;
     }
 
-    public int getFemaleNumber() {
+    public long getFemaleNumber() {
         return femaleNumber;
     }
 
-    public void setFemaleNumber(int femaleNumber) {
+    public void setFemaleNumber(long femaleNumber) {
         this.femaleNumber = femaleNumber;
     }
 
-    public int getMaleNumber() {
+    public long getMaleNumber() {
         return maleNumber;
     }
 
-    public void setMaleNumber(int maleNumber) {
+    public void setMaleNumber(long maleNumber) {
         this.maleNumber = maleNumber;
     }
 
@@ -185,7 +185,7 @@ public class Population {
 
     public int [][] getPossibleLittersTab(){ return this.possibleLitters ;}
 
-    public void updateAliveRabbitsPop(int deathFemale, int deathRabbits) {
+    public void updateAliveRabbitsPop(long deathFemale, long deathRabbits) {
 
         try {
 
@@ -204,7 +204,7 @@ public class Population {
 
     }
 
-    public void addAliveRabbits(int newFemaleNumber, int newMaleNumber, int newRabbitsNumber ){
+    public void addAliveRabbits(long newFemaleNumber, long newMaleNumber, long newRabbitsNumber ){
 
         this.maleNumber        += newMaleNumber;
         this.femaleNumber      += newFemaleNumber;
@@ -229,7 +229,7 @@ public class Population {
 
     public void initPopulation() {
 
-        MonthlyPopulation monthlyPopulation = new MonthlyPopulation(this.aliveRabbitNumber, this.femaleNumber, (int) this.rand(this.getMinSexualMaturity(), this.getMaxSexualMaturity() + 1));
+        MonthlyPopulation monthlyPopulation = new MonthlyPopulation((int) this.aliveRabbitNumber, (int) this.femaleNumber, (int) this.rand(this.getMinSexualMaturity(), this.getMaxSexualMaturity() + 1));
         this.populations.add(monthlyPopulation);
 
     }
@@ -257,6 +257,7 @@ public class Population {
                ", aliveRabbitNumber = " + this.aliveRabbitNumber +
                ", femaleNumber = " + this.femaleNumber +
                ", maleNumber = " + this.maleNumber +
+               ", nbMonthlyPopulation = " + this.populations.size() +
                "  }";
     }
 }
