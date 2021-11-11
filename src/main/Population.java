@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Population {
 
+    private int      age;
     private int      aliveRabbitNumber;
     private int      femaleNumber;
     private int      maleNumber;
@@ -24,6 +25,7 @@ public class Population {
 
     public Population() {
         //this.cumulateProbas =  getCumulateLittersProbas(possibleLitters);
+        this.age = 0;
         this.random = new MersenneTwister();
         this.populations = new ArrayList<MonthlyPopulation>();
         random.setSeed(123456789);
@@ -33,6 +35,7 @@ public class Population {
                       int minSexualMaturity, int maxSexualMaturity, int adultsSurvivalRate, int kittensSurvivalRate,
                       int yearsBeforeLeast, int leastProbaEachYear, int[][] possibleLitters ) {
 
+        this.age                    = 0;
         this.femaleNumber           = femaleNumber;
         this.maleNumber             = maleNumber;
         this.aliveRabbitNumber      = maleNumber + femaleNumber;
@@ -62,6 +65,14 @@ public class Population {
      */
     public double rand(int min, int max) {
         return min + (max - min) * random.nextDouble();
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public int getAliveRabbitNumber() {
@@ -174,24 +185,20 @@ public class Population {
 
     public int [][] getPossibleLittersTab(){ return this.possibleLitters ;}
 
-    public void updateAliveRabbitsPop(int deathFemale, int deathRabbits){
+    public void updateAliveRabbitsPop(int deathFemale, int deathRabbits) {
 
-        try{
-            if( (this.femaleNumber - deathFemale < 0) || ( this.maleNumber - (deathRabbits - deathFemale) < 0  ) || (this.aliveRabbitNumber - deathRabbits < 0) ){
+        try {
 
+            if((this.femaleNumber - deathFemale < 0) || ( this.maleNumber - (deathRabbits - deathFemale) < 0  ) || (this.aliveRabbitNumber - deathRabbits < 0)) {
                 throw new IllegalArgumentException();
-
-            }
-            else{
+            } else {
 
                 this.femaleNumber       -= deathFemale;
                 this.maleNumber         -= (deathRabbits - deathFemale);
                 this.aliveRabbitNumber  -= deathRabbits;
 
             }
-        }
-        catch (IllegalArgumentException e){
-
+        } catch (IllegalArgumentException e) {
             System.err.println("The number of death rabbit is too high.");
         }
 
@@ -222,27 +229,34 @@ public class Population {
 
     public void initPopulation() {
 
-        MonthlyPopulation monthlyPopulation = new MonthlyPopulation(this.aliveRabbitNumber, this.femaleNumber, 1);
-
+        MonthlyPopulation monthlyPopulation = new MonthlyPopulation(this.aliveRabbitNumber, this.femaleNumber, (int) this.rand(this.getMinSexualMaturity(), this.getMaxSexualMaturity() + 1));
         this.populations.add(monthlyPopulation);
+
     }
 
     public void evolution() {
 
-        for(int i=0; i<populations.size(); i++) {
-            MonthlyPopulation mp = populations.get(i);
-            mp.evolution(this);
+        this.age++;
+        MonthlyPopulation nextMonthlyPopulation = new MonthlyPopulation(0,0, (int) this.rand(this.getMinSexualMaturity(), this.getMaxSexualMaturity() + 1));
 
+        for (int i = 0; i < populations.size() ; i++) {
+            MonthlyPopulation mp = populations.get(i);
+            mp.evolution(this, nextMonthlyPopulation);
+        }
+
+        if (nextMonthlyPopulation.getRabbitNumber() > 0) {
+            this.populations.add(nextMonthlyPopulation);
         }
 
     }
 
     @Override
     public String toString() {
-        return "Population{ " +
-               "aliveRabbitNumber=" + this.aliveRabbitNumber +
-               ", femaleNumber" + this.femaleNumber +
-               ", maleNumber=" + this.maleNumber +
-               " }";
+        return "Population { " +
+               "age = " + this.age +
+               ", aliveRabbitNumber = " + this.aliveRabbitNumber +
+               ", femaleNumber = " + this.femaleNumber +
+               ", maleNumber = " + this.maleNumber +
+               "  }";
     }
 }

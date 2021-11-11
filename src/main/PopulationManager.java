@@ -7,10 +7,10 @@ public class PopulationManager {
         Population rabbitPopulation = new Population(10,10,3,6,50,4,8,60,35,10,10,possibleLitters);
         //MonthlyPopulation monthly = new MonthlyPopulation(10000,5000,5);
 
-        for(int i=0; i<6; i++){
+        for(int i=0; i<13; i++){
 
             rabbitPopulation.evolution();
-
+            System.out.println(rabbitPopulation.toString());
             for (MonthlyPopulation mp : rabbitPopulation.getPopulations()) {
                 System.out.println(mp.toString());
             }
