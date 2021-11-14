@@ -114,8 +114,8 @@ public class MonthlyPopulation {
 
         int kittensNumber = getMiddle(population.getMinKittens(), population.getMaxKittens());
 
-        newKittensNumber = this.aliveFemaleNumber * kittensNumber;
-        newMaleKittensNumber = (long) (population.getMaleProb() / 100 * newKittensNumber);
+        newKittensNumber = (long) getApproximation(population, aliveFemaleNumber * kittensNumber,10);
+        newMaleKittensNumber = (long) (getApproximation(population, population.getMaleProb(), 5) / 100 * newKittensNumber);
         newFemaleKittensNumber = newKittensNumber - newMaleKittensNumber;
 
         /*for (int i = 0 ; i < this.aliveFemaleNumber ; i++) {
@@ -165,8 +165,8 @@ public class MonthlyPopulation {
             monthsAge -= 12;
         }
 
-        newAliveFemaleNumber = (long) (this.aliveFemaleNumber * survivalProba / 100);
-        newAliveRabbitNumber = (long) (this.aliveRabbitNumber * survivalProba / 100);
+        newAliveFemaleNumber = (long) (this.aliveFemaleNumber * getApproximation(population, survivalProba, 5) / 100);
+        newAliveRabbitNumber = (long) (this.aliveRabbitNumber * getApproximation(population, survivalProba, 5) / 100);
 
         /*for (int i = 0 ; i < this.aliveRabbitNumber ; i++) {
 
@@ -207,6 +207,10 @@ public class MonthlyPopulation {
 
         return j;
 
+    }
+
+    public double getApproximation(Population population, double d, int percentage) {
+        return population.rand((int) d - (int) (d * percentage / 100), (int) d + (int) (d * percentage / 100));
     }
 
     public int getMiddle(int a, int b) {
