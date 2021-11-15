@@ -96,11 +96,9 @@ public class MonthlyPopulation {
 
         updateLittersNumber(population);
 
-        if (population.getAge() % 12 == 0) {
-            updateAliveRabbits(population);
-        }
+        updateAliveRabbits(population);
 
-        if (this.littersNumber > 0 && this.age >= this.monthsMaturity) {
+        if (this.littersNumber > 0 && this.age >= this.monthsMaturity && this.aliveRabbitNumber > this.aliveFemaleNumber) {
             generateLitter(population, nextMonthlyPopulation);
         }
 
@@ -155,7 +153,8 @@ public class MonthlyPopulation {
 
     public void updateAliveRabbits(Population population) {
 
-        int survivalProba = this.age >= this.monthsMaturity ? population.getAdultsSurvivalRate() : population.getKittensSurvivalRate();
+        double survivalProba = this.age >= this.monthsMaturity ? population.getAdultsSurvivalRate() :
+                          population.getKittensSurvivalRate();
         long newAliveRabbitNumber = this.aliveRabbitNumber;
         long newAliveFemaleNumber = this.aliveFemaleNumber;
         int monthsAge = age;
@@ -165,8 +164,11 @@ public class MonthlyPopulation {
             monthsAge -= 12;
         }
 
-        newAliveFemaleNumber = (long) (this.aliveFemaleNumber * getApproximation(population, survivalProba, 5) / 100);
-        newAliveRabbitNumber = (long) (this.aliveRabbitNumber * getApproximation(population, survivalProba, 5) / 100);
+        newAliveRabbitNumber =
+                (long) ((this.aliveRabbitNumber - this.aliveFemaleNumber) * getApproximation(population,  Math.pow((survivalProba / 100), (double) 1/12), 2));
+        newAliveFemaleNumber =
+                (long) (this.aliveFemaleNumber * getApproximation(population,  Math.pow((survivalProba / 100), (double) 1/12), 2));
+
 
         /*for (int i = 0 ; i < this.aliveRabbitNumber ; i++) {
 
@@ -184,9 +186,10 @@ public class MonthlyPopulation {
 
         }*/
 
-        population.updateAliveRabbitsPop((this.aliveFemaleNumber - newAliveFemaleNumber), (this.aliveRabbitNumber - newAliveRabbitNumber));
+        population.updateAliveRabbitsPop((this.aliveFemaleNumber - newAliveFemaleNumber),
+                                         (this.aliveRabbitNumber - (newAliveRabbitNumber + newAliveFemaleNumber)));
 
-        this.aliveRabbitNumber = newAliveRabbitNumber;
+        this.aliveRabbitNumber = newAliveRabbitNumber + newAliveFemaleNumber;
         this.aliveFemaleNumber = newAliveFemaleNumber;
 
         if (this.aliveRabbitNumber <= 0) {
@@ -210,7 +213,7 @@ public class MonthlyPopulation {
     }
 
     public double getApproximation(Population population, double d, int percentage) {
-        return population.rand((int) d - (int) (d * percentage / 100), (int) d + (int) (d * percentage / 100));
+        return population.rand(d - (d * percentage / 100),  d + (d * percentage / 100));
     }
 
     public int getMiddle(int a, int b) {

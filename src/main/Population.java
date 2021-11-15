@@ -1,3 +1,4 @@
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Population {
@@ -10,8 +11,8 @@ public class Population {
     private int      maxKittens;
     private int      minSexualMaturity;
     private int      maxSexualMaturity;
-    private int      adultsSurvivalRate;
-    private int      kittensSurvivalRate;
+    private double      adultsSurvivalRate;
+    private double      kittensSurvivalRate;
     private int      yearsBeforeLeast;
     private int      leastProbaEachYear;
     private int  []  cumulateProbas;
@@ -32,7 +33,8 @@ public class Population {
     }
 
     public Population(long femaleNumber, long maleNumber, int minKittens, int maxKittens, double maleProb,
-                      int minSexualMaturity, int maxSexualMaturity, int adultsSurvivalRate, int kittensSurvivalRate,
+                      int minSexualMaturity, int maxSexualMaturity, double adultsSurvivalRate,
+                      double kittensSurvivalRate,
                       int yearsBeforeLeast, int leastProbaEachYear, int[][] possibleLitters ) {
 
         this.age                    = 0;
@@ -53,7 +55,9 @@ public class Population {
 
         this.random = new MersenneTwister();
         this.populations = new ArrayList<MonthlyPopulation>();
-        random.setSeed(123456789);
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        random.setSeed(timestamp.getTime());
         initPopulation();
     }
 
@@ -63,9 +67,10 @@ public class Population {
      * @param max Maximum value
      * @return Random number between min and max
      */
-    public double rand(int min, int max) {
+    public double rand(double min, double max) {
         return min + (max - min) * random.nextDouble();
     }
+
 
     public int getAge() {
         return age;
@@ -131,7 +136,7 @@ public class Population {
         this.maxSexualMaturity = maxSexualMaturity;
     }
 
-    public int getAdultsSurvivalRate() {
+    public double getAdultsSurvivalRate() {
         return adultsSurvivalRate;
     }
 
@@ -139,7 +144,7 @@ public class Population {
         this.adultsSurvivalRate = adultsSurvivalRate;
     }
 
-    public int getKittensSurvivalRate() {
+    public double getKittensSurvivalRate() {
         return kittensSurvivalRate;
     }
 
