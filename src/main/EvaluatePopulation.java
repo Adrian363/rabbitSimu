@@ -30,6 +30,12 @@ public class EvaluatePopulation {
 
         }
 
+        public double getAverageRabbitsEnd(){
+
+                return this.averageRabbitsEnd;
+
+        }
+
         public void simulationPop(){
 
                 for (int i = 0;  i < this.nbPopSim; i++){
@@ -39,7 +45,9 @@ public class EvaluatePopulation {
 
 
                         for(int j = 0; j < this.yearsSimulation * 12; j++){
+
                                 population.evolution();
+
                         }
 
                         population.detailsDisplay(i);
