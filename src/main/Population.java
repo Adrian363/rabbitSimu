@@ -4,15 +4,15 @@ import java.util.ArrayList;
 public class Population {
 
     private int      age;
-    private long      aliveRabbitNumber;
-    private long      femaleNumber;
-    private long      maleNumber;
+    private long     aliveRabbitNumber;
+    private long     femaleNumber;
+    private long     maleNumber;
     private int      minKittens;
     private int      maxKittens;
     private int      minSexualMaturity;
     private int      maxSexualMaturity;
-    private double      adultsSurvivalRate;
-    private double      kittensSurvivalRate;
+    private double   adultsSurvivalRate;
+    private double   kittensSurvivalRate;
     private int      yearsBeforeLeast;
     private int      leastProbaEachYear;
     private int  []  cumulateProbas;
@@ -35,7 +35,7 @@ public class Population {
     public Population(long femaleNumber, long maleNumber, int minKittens, int maxKittens, double maleProb,
                       int minSexualMaturity, int maxSexualMaturity, double adultsSurvivalRate,
                       double kittensSurvivalRate,
-                      int yearsBeforeLeast, int leastProbaEachYear, int[][] possibleLitters ) {
+                      int yearsBeforeLeast, int leastProbaEachYear, int[][] possibleLitters, MersenneTwister random ) {
 
         this.age                    = 0;
         this.femaleNumber           = femaleNumber;
@@ -53,11 +53,12 @@ public class Population {
         this.possibleLitters        = possibleLitters;
         this.cumulateProbas         = getCumulateLittersProbas(possibleLitters);
 
-        this.random = new MersenneTwister();
+        //this.random = new MersenneTwister();
+        this.random = random;
         this.populations = new ArrayList<MonthlyPopulation>();
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        random.setSeed(timestamp.getTime());
+        //random.setSeed(123456789);
         initPopulation();
     }
 
@@ -255,6 +256,23 @@ public class Population {
 
     }
 
+    public void detailsDisplay(int populationNumber){
+
+        System.out.println("----------------------------------------");
+        System.out.println("Population n°"+ populationNumber + " after " + this.age + " months");
+
+        if(this.aliveRabbitNumber > 0){
+
+            System.out.println("Number of alive rabbits: " + this.aliveRabbitNumber);
+            System.out.println("Number of alive females: " + this.femaleNumber + " Percentage: " + ((float)this.femaleNumber/this.aliveRabbitNumber) * 100 + "%");
+            System.out.println("Number of alive males: " + this.maleNumber + " Percentage: " + ((float)this.maleNumber/this.aliveRabbitNumber) * 100 + "%");
+
+        }
+        else{
+            System.out.println("All the rabbits in the population are dead !");
+        }
+
+    }
     @Override
     public String toString() {
         return "Population { " +
