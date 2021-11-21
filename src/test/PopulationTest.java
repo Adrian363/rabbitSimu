@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class PopulationTest {
 
     @Test
+    /**
+     * Test if the random number generation is correct
+     */
     public void rand() {
 
         Population population = new Population();
@@ -16,6 +19,9 @@ class PopulationTest {
     }
 
     @Test
+    /**
+     * Test if the add of rabbits is correct
+     */
     public void addRabbits() {
 
         Population population = new Population();
@@ -29,6 +35,9 @@ class PopulationTest {
     }
 
     @Test
+    /**
+     * Test if the remove of rabbits is correct
+     */
     public void removeRabbits() {
 
         Population population = new Population();

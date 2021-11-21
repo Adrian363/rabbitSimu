@@ -24,6 +24,9 @@ class MonthlyPopulationTest {
      */
 
     @Test
+    /**
+     * Test if the update of the alive rabbits is correct
+     */
     void updateAliveRabbits() {
 
         int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
@@ -35,16 +38,19 @@ class MonthlyPopulationTest {
         MonthlyPopulation monthlyPopulation = new MonthlyPopulation(1000,500,5);
 
         monthlyPopulation.updateAliveRabbits(population);
-        assertEquals(350, monthlyPopulation.getAliveRabbitNumber(),20);
-        assertEquals(175, monthlyPopulation.getAliveFemaleNumber(),20);
+        assertEquals(920, monthlyPopulation.getAliveRabbitNumber(),20);
+        assertEquals(450, monthlyPopulation.getAliveFemaleNumber(),20);
 
         monthlyPopulation.updateAliveRabbits(population);
-        assertEquals(122, monthlyPopulation.getAliveRabbitNumber(),20);
-        assertEquals(60, monthlyPopulation.getAliveFemaleNumber(),20);
+        assertEquals(840, monthlyPopulation.getAliveRabbitNumber(),20);
+        assertEquals(420, monthlyPopulation.getAliveFemaleNumber(),20);
 
     }
 
     @Test
+    /**
+     * Test if the calculation of the cumulated probabilities is correct
+     */
     void getCumulateLittersProbas() {
         int[][] possibleLitters = { { 4, 5 }, { 5, 30 }, { 6, 30 }, { 7, 30 }, { 8, 5 } };
 
@@ -59,6 +65,9 @@ class MonthlyPopulationTest {
     }
 
     @Test
+    /**
+     * Test if the generation of a litter is correct
+     */
     void getLitter() {
 
 
@@ -73,12 +82,12 @@ class MonthlyPopulationTest {
 
         assertEquals(3,monthlyPopulation.getLitter(cumulateProbas, population));
         assertEquals(3,monthlyPopulation.getLitter(cumulateProbas, population));
-        assertEquals(3,monthlyPopulation.getLitter(cumulateProbas, population));
         assertEquals(4,monthlyPopulation.getLitter(cumulateProbas, population));
         assertEquals(2,monthlyPopulation.getLitter(cumulateProbas, population));
         assertEquals(4,monthlyPopulation.getLitter(cumulateProbas, population));
         assertEquals(4,monthlyPopulation.getLitter(cumulateProbas, population));
         assertEquals(1,monthlyPopulation.getLitter(cumulateProbas, population));
+        assertEquals(3,monthlyPopulation.getLitter(cumulateProbas, population));
 
     }
 
